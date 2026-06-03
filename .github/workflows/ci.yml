@@ -1,0 +1,29 @@
+name: ci
+on:
+  pull_request:
+    branches: [develop, main]
+  push:
+    branches: [develop, main]
+jobs:
+  # 这个 job 名 "test" 就是分支保护要求的必过 status check —— 改名要同步改 ruleset
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      # TODO: 换成你的真实构建+测试。按技术栈二选一示例：
+      #   - run: npm ci && npm run build && npm test
+      #   - run: go build ./... && go test ./...
+      - name: build & test
+        run: echo "TODO: 填入真实构建/测试命令"
+
+  # ---- 部署占位：技术栈确定后再填，分支↔环境一一对应 ----
+  # deploy-staging:   # push 到 develop → 测试环境
+  #   needs: test
+  #   if: github.ref == 'refs/heads/develop' && github.event_name == 'push'
+  #   runs-on: ubuntu-latest
+  #   steps: [...]
+  # deploy-prod:      # push 到 main → 生产
+  #   needs: test
+  #   if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+  #   runs-on: ubuntu-latest
+  #   steps: [...]
